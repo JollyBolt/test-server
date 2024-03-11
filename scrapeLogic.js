@@ -1,11 +1,12 @@
 const puppeteer = require("puppeteer");
 require("dotenv").config();
 
-const scrapeLogic = async (res) => {
+const scrapeLogic = async (req,res) => {
   const searchTerm = req.query.searchTerm;
   console.log(searchTerm)
   var url = `https://news.google.com/search?q=%22${searchTerm}%22%20when%3A1d&hl=en-IN&gl=IN&ceid=IN%3Aen`
   const browser = await puppeteer.launch({
+    headless:true,
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
@@ -58,6 +59,8 @@ const scrapeLogic = async (res) => {
     var newsList = []
     console.log("Opening Google News...")
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 5000 });
+    await page.setViewport({ width: 1080, height: 1024 });
+
 
     newsList = await page.$$eval('.JtKRv', elements => {
       return elements.map(element => {
