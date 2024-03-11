@@ -58,8 +58,13 @@ const scrapeLogic = async (req,res) => {
     const page = await browser.newPage();
     var newsList = []
     console.log("Opening Google News...")
-    await page.goto(url)
-    await new Promise(r => setTimeout(r, 5000));
+    try{
+      await page.goto(url, { waitUntil: 'networkidle2', timeout: 5000 });
+    }
+    catch{
+      console.log("Continuing without full load")
+    }
+    
     await page.setViewport({ width: 1080, height: 1024 });
 
 
