@@ -6,7 +6,7 @@ const scrapeLogic = async (req,res) => {
   console.log(searchTerm)
   var url = `https://news.google.com/search?q=%22${searchTerm}%22%20when%3A1d&hl=en-IN&gl=IN&ceid=IN%3Aen`
   const browser = await puppeteer.launch({
-    headless:true,
+    headless:false,
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
